@@ -1,0 +1,20 @@
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "AKIAT7TJ4FYSDWA2XJFK"
+  secret_key = "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"
+}
+
+resource "aws_instance" "foo" {
+  ami           = "ami-0022f774911c1d690"
+  instance_type = "t2.micro"
+  key_name = "usha0909"
+
+     tags = {
+     Name = "niya0909"
+  }
+}
+
+resource "aws_key_pair" "guru" {
+  key_name   = "usha0909"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDEN7VTgBshsRyznupl3GYwalgDtQYds8uB49z7M4hyoIRPZEByA1Hbpr4AUQKx71vrMogjEOfhZyZZQSR7unCUVVPsuYKpz7QUzJoUgSIMbHtTAyXYPHaxDceLB2572YLyJfCh4v2Bo0JlKw7KegkXvYyX4YcN/K5NqODg8R6pb29tyrQ6f648mfZcReGpeHTb1AH2uGzI8jvfrS0+XZK0C+tfzTIcfhceZ+1na2XkD/b5yw6w6YU8wLqXSXThR/NfNAopsV+QqB789AibYLUF0m6G1wXshvMLvx4U1Yl2eBi70T4vYfRIbxdrsz7fuEqHc9vW8OXjiZ+w+dFicG8V root@ip-172-31-21-15.ec2.internal"
+}
