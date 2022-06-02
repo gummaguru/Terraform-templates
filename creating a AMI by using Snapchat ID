@@ -24,3 +24,58 @@ resource "aws_ami" "example" {
     volume_size = 8
   }
 }
+
+=============================================================
+
+CREATING AMI ONE REGION TO ANOTHER REGION
+---------------------------------------------
+
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "AKIAT7TJ4FYSDWA2XJFK"
+  secret_key = "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"
+}
+
+resource "aws_instance" "web" {
+  ami           = "ami-06eecef118bbf9259"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+
+resource "aws_ami_copy" "example" {
+  name              = "terraform-example-copy"
+  description       = "A copy of ami-xxxxxxxx" 
+  source_ami_id     = "ami-06b0757b0aa9c9553"   ### current server of the AMI ID
+  source_ami_region = "us-west-1"  ## another region name
+
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+
+================================================================
+
+CREATING AMI THROUGH AWS INSTANCE 
+----------------------------------------
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "AKIAT7TJ4FYSDWA2XJFK"
+  secret_key = "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"
+}
+
+resource "aws_instance" "web" {
+  ami           = "ami-06eecef118bbf9259"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "HelloWorld"
+  }
+}
+
+resource "aws_ami_from_instance" "example" {
+  name               = "terraform-example"
+  source_instance_id = "i-0cd785207a6a8c74d" ### instance ID of the running instance through that AMI will be created.
+}
