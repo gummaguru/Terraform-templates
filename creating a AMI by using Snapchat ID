@@ -1,0 +1,26 @@
+provider "aws" {
+  region     = "us-east-1"
+  access_key = "AKIAT7TJ4FYSDWA2XJFK"
+  secret_key = "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"
+}
+
+resource "aws_instance" "gehna" {
+  ami           = "ami-0022f774911c1d690"
+  instance_type = "t2.micro"
+
+     tags = {
+       Name = "gehna"
+  }
+}
+
+resource "aws_ami" "example" {
+  name                = "terraform-example"
+  virtualization_type = "hvm"
+  root_device_name    = "/dev/xvda"   ### by default path we can get it on aws server.
+
+  ebs_block_device {
+    device_name = "/dev/xvda"
+    snapshot_id = "snap-03703795cc401392b"   ### we should give snapchat id of which we have created,
+    volume_size = 8
+  }
+}
