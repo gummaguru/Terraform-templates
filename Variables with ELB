@@ -1,8 +1,8 @@
+
 ## This snippet is from the Data Types for Variable video.
 
-### ec2_datatype.tf
+### vi ec2_datatype.tf
 
-```sh
 provider "aws" {
   region     = "us-west-2"
   access_key = "YOUR-ACCESS-KEY"
@@ -15,7 +15,7 @@ resource "aws_iam_user" "lb" {
 }
 
 ```
-### elb.tf
+###  vi elb.tf
 
 Documentation:  https://www.terraform.io/docs/providers/aws/r/elb.html
 
