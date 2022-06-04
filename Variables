@@ -1,0 +1,76 @@
+1st case
+=====================
+provider "aws" {
+    region     = "us-east-1"
+    access_key = "AKIAT7TJ4FYSJ5UXIOPG"
+    secret_key = "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"
+}
+
+variable  "instancetype" {
+   default  = "t2.nano"
+}
+
+variable  "image" {
+   default = "ami-0022f774911c1d690"
+}
+
+resource  "aws_instance" "niyanshi" {
+    ami           = var.image
+    instance_type = var.instancetype
+
+    tags = {
+      name = "gehna-1"
+ }
+}
+
+resource  "aws_instance" "usha" {
+     ami           = var.image
+     instance_type = var.instancetype
+
+     tags = {
+     name = "gehna-2"
+ }
+}
+
+
+
+2nd case 
+======================
+we can define like below aswell 
+
+$ vi varables.tf
+
+variable  "instancetype" {
+   default  = "t2.nano"
+}
+
+variable  "image" {
+   default = "ami-0022f774911c1d690"
+}
+
+ $ main.tf 
+ 
+ provider "aws" {
+    region     = "us-east-1"
+    access_key = "AKIAT7TJ4FYSJ5UXIOPG"
+    secret_key = "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"
+}
+
+resource  "aws_instance" "niyanshi" {
+    ami           = var.image
+    instance_type = var.instancetype
+
+    tags = {
+      name = "gehna-1"
+ }
+}
+
+resource  "aws_instance" "usha" {
+     ami           = var.image
+     instance_type = var.instancetype
+
+     tags = {
+     name = "gehna-2"
+ }
+}
+
