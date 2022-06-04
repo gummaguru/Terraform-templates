@@ -74,3 +74,36 @@ resource  "aws_instance" "usha" {
  }
 }
 
+==============================================================================
+
+Assign Values To Input Variables:- 
+
+There are multiple ways to assign values to variables. The following is the descending order of precedence in which variables are considered.
+
+1. Command-line flags:-
+
+The most simple way to assign value to a variable is using the -var option in the command line when running the terraform plan and terraform apply commands.
+
+$ terraform apply -var="resourceGroupName=terraformdemo-rg" -var="location=eastus"
+
+
+2. Variable Definition (.tfvars) Files :-
+
+
+If there are many variable values to input, we can define them in a variable definition file. Terraform also automatically loads a number of variable definitions files if they are present:
+
+Files named exactly terraform.tfvars or terraform.tfvars.json
+Any files with names ending in .auto.tfvars or .auto.tfvars.json
+
+$ terraform apply -var-file="testing.tfvars"
+
+
+3. Environment Variables:-
+
+
+Terraform searches the environment of its own process for environment variables named TF_VAR_<var-name> followed by the name of a declared variable. Terraform scans all variables starting with TF_VAR and use those as variable values for Terraform.
+
+$ export TF_VAR_location=eastus
+
+This can be useful when running Terraform in automation, or when running a sequence of Terraform commands in succession with the same terraform variables.
+
