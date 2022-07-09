@@ -147,4 +147,114 @@ resource "aws_instance" "prod" {
 
 
 
+=====================================================================================================
+=======================================================================================
+
+======================                COUNT                 ===============================
+
+Example - 1:-
+---------------------
+
+provider "aws" {
+   region     = "us-east-1"
+   access_key = "AKIAT7TJ4FYSGVAFW2R6"
+   secret_key = "BCkT8gx9FbaOvvSsYWPMNxG7tllFaupF98KQCTg6"
+ }
+
+resource "aws_instance" "guru" {
+ instance_type = "t2.micro"
+ ami           = "ami-0cff7528ff583bf9a"
+ count = 3  ##################################################( By using using count we can create a no.of services like 100 or above at a time) #############################
+ tags = {
+   name = "niya.${count.index}"
+  }
+}
+
+
+Example -2 
+-------------------------
+
+provider "aws" {
+   region     = "us-east-1"
+   access_key = "AKIAT7TJ4FYSGVAFW2R6"
+   secret_key = "BCkT8gx9FbaOvvSsYWPMNxG7tllFaupF98KQCTg6"
+ }
+
+variable "instancetag" {
+   type = list
+   default = ["dev-dept","test-dept","prod-dept"]
+}
+
+variable "instancetype" {
+   type = list
+   default = ["t2.mirco","t2.nano","t2.small"]
+}
+
+variable "image" {
+   type = list
+   default = ["ami-0cff7528ff583bf9a","ami-0cff7528ff583bf9a","ami-0cff7528ff583bf9a"]
+}
+
+resource "aws_instance" "guru" {
+ instance_type = var.instancetype[count.index]
+ ami           = var.image[count.index]
+ count = 3      
+ tags = {
+   name = var.instancetag[count.index]
+  }
+}
+
+
+
+======================================================================
+
+#################### By this below example we are going to create a every server 3 times at a time    ######################################
+
+provider "aws" {
+   region     = "us-east-1"
+   access_key = "AKIAT7TJ4FYSGVAFW2R6"
+   secret_key = "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"
+ }
+
+variable "instancetag" {
+   type = list
+   default = ["dev-dept","test-dept","prod-dept"]
+}
+
+variable "instancetype" {
+   type = list
+   default = ["t2.mirco","t2.nano","t2.small"]
+}
+
+variable "image" {
+   type = list
+   default = ["ami-0cff7528ff583bf9a","ami-0cff7528ff583bf9a","ami-0cff7528ff583bf9a"]
+}
+
+resource "aws_instance" "guru" {
+ instance_type = var.instancetype[0]
+ ami           = var.image[0]
+ count = 3      
+ tags = {
+   name = var.instancetag[0]
+  }
+}
+
+resource "aws_instance" "niya" {
+ instance_type = var.instancetype[1]
+ ami           = var.image[1]
+ count = 3      
+ tags = {
+   name = var.instancetag[1]
+  }
+}
+
+resource "aws_instance" "gehna" {
+ instance_type = var.instancetype[2]
+ ami           = var.image[2]
+ count = 3      
+ tags = {
+   name = var.instancetag[2]
+  }
+}
 
