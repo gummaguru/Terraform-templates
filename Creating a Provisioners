@@ -1,0 +1,63 @@
+ #######################   STEPS   #############################
+ 
+ 1. write a code for creating a instance.
+ 2. Next, we need to do connection for local to remote server for that we need to create a key_pair by using ssh connection on local machine.
+ 
+      resource "aws_key_pair" "developer" {
+         key_name = "developer"
+         public_key = " "  ( here we need to mention after generation of ssh public key).
+         
+ 3. ssh key-gen  ( Here created a ppk file with the name (developer)).
+ 4. take that ppk file and add in .tf file under the section of key_pair. next we need to add that public key in under resource section.
+    key_name = "developer"
+ 5. Once EC2 instance created we need to instal some softwares(apache, maven,git etc...) on remote sevrer. to install packeges we need to use remote-exec provisioner.
+  😍😍😍😍😍😍😍  Note :-  whenever we are writing any provisioner we should write a resourse section.
+  
+ 6. First we need to ADD file provisioner under resource section.  
+     provisioner "file" {
+        source = "root/mycloud/terraform/index.html" ####  ( Just we need to mention our local machine path of that file).
+        destination = "tmp/index.html"   #######   ( By default path is tmp).
+        
+ 7. Next, we will write a remote-exec provisioner for install some packages.
+       provisioner "remote-exec" {
+           inline = [
+             "sudo yum install httpd -y",
+             "sudo systemctl start httpd",
+             "sudo systemctl enable https",
+             "cp /tmp.index.html /var/www/html",  ##### ( Here actual path of remote server is /tmp/ from this location to we are copying index.html file to var/www/html)00
+             "sudo systemctl restart httpd"
+           ]
+          }
+         
+  8. Next, we will write a connection for connect the remote server.
+  
+            connection {
+               host = self.public_ip
+               user = "ec2-user"
+               type = "ssh"
+               private_key = file("./developer") ###### ( Here we are using above key for accessing).
+               
+             }
+     9. $ terraform init
+        $ terraform validate
+        $ terraform plan
+        $ terraform apply
+        
+     10. Next, we need to login that server through using ssh.
+       
+          $ ssh -i "developer" ec2-user@<public ip of remote server>.
+             it should be login on remote server.
+              
+             $ sudo -i
+             $ cd /tmp/
+             $ ls 
+                index.html
+             $ cd /var/www/html
+             $ ls 
+                index.html
+             $ systemctl status httpd
+             
+             Then take that public IP copy on google. 
+             
+        
+ 
