@@ -1,0 +1,113 @@
+
+
+################  Steps   ##################
+
+ 😍😍😍😍😍😍😍 😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍
+ 
+ 1. First we will create a required instances.
+
+provider "aws" {
+     region     = "us-east-1"
+     access_key = "AKIAT7TJ4FYSKYGNLJPZ"
+     secret_key = "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"
+}
+
+resource "aws_instance" "guru" {
+     instance_type = "t2.micro"
+     ami           = "ami-0cff7528ff583bf9a"
+
+     tags = {
+      name = "sanvi"
+  }
+}
+
+resource "aws_instance" "usha" {
+     instance_type = "t2.micro"
+     ami           = "ami-0cff7528ff583bf9a"
+
+     tags = {
+      name = "tanshi"
+  }
+}
+
+$ terraform init
+$ terraform validate
+$ terraform plan
+$ terraform apply
+
+😍😍😍😍😍😍😍 😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍
+
+2. Create a S3 bucket on console.
+
+go to s3 --> create a bucket --> enable all options.
+
+😍😍😍😍😍😍😍 😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍
+
+3. After creating the instances need to configure s3 on .tf state file for accessing or storing the terraform.tfstate file on under s3 bucket.
+
+terraform {
+  backend "s3" {
+    bucket  = "niyanshi"
+    key     = "guru/gehna"
+    region  = "us-east-1"
+    access_key = "AKIAT7TJ4FYSKYGNLJPZ"
+    secret_key = "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"
+  }
+}
+
+😍😍😍😍😍😍😍 😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍
+
+4. then launch the .tf file on server. it will create a one path and .tfstate file under s3 bucket.
+
+  So, here created bucket and path (guru/gehna).
+  
+
+😍😍😍😍😍😍😍 😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍
+
+5.  Next, we have to create DynamoDB table on console.
+
+     name := tettaform.   ( dynamodb_table = "terraform").
+     (dynamodb_table = "terraform") this dynamodb table name added into the .tf file under the s3 section.
+     
+     terraform {
+  backend "s3" {
+    bucket  = "niyanshi"
+    key     = "guru/gehna"
+    region  = "us-east-1"
+    access_key = "AKIAT7TJ4FYSKYGNLJPZ"
+    secret_key = "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"
+    dynamodb_table = "terraform"
+  }
+}
+
+😍😍😍😍😍😍😍 😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍😍
+
+6.  After adding the dynamodb table. we nedd to initialize the .tf state. it will through a error while doing terraform init.  
+
+   (((([root@ip-172-31-89-206 ~]# terraform init
+
+Initializing the backend...
+╷
+│ Error: Backend configuration changed
+│
+│ A change in the backend configuration has been detected, which may require migrating existing state.
+│
+│ If you wish to attempt automatic migration of the state, use "terraform init -migrate-state".
+│ If you wish to store the current configuration with no changes to the state, use "terraform init -reconfigure". ))))))
+
+In this case what we need to do reconfigure the initialization.
+
+  $ terraform init -reconfigure
+   
+    ((((((((((((((((((([root@ip-172-31-89-206 ~]# terraform init -reconfigure
+
+                             Initializing the backend...
+
+                             Successfully configured the backend "s3"! Terraform will automatically
+                             use this backend unless the backend configuration changes.))))))))))))))))))))))))..
+  
+  $ terraform validate
+  $ terraform apply
+
+
+      
