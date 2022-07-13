@@ -17,6 +17,7 @@
      provisioner "file" {
         source = "root/mycloud/terraform/index.html" ####  ( Just we need to mention our local machine path of that file).
         destination = "tmp/index.html"   #######   ( By default path is tmp).
+     }
         
  7. Next, we will write a remote-exec provisioner for install some packages.
        provisioner "remote-exec" {
