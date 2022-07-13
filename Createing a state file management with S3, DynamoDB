@@ -95,7 +95,7 @@ Initializing the backend...
 │ If you wish to attempt automatic migration of the state, use "terraform init -migrate-state".
 │ If you wish to store the current configuration with no changes to the state, use "terraform init -reconfigure". ))))))
 
-In this case what we need to do reconfigure the initialization.
+In this case we need to do reconfigure the initialization.
 
   $ terraform init -reconfigure
    
@@ -107,7 +107,55 @@ In this case what we need to do reconfigure the initialization.
                              use this backend unless the backend configuration changes.))))))))))))))))))))))))..
   
   $ terraform validate
+  $ terraform plan
   $ terraform apply
+  
+  
+  Finally, it has done with .tfstate file.
+  
+  For, Next scenario we are going configure workspaces.
+  
+  
+ 🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉 Final code of main.tf  😍😍😍😍😍😍😍😍😍😍
+  
+  provider "aws" {
+     region     = "us-east-1"
+     access_key = "AKIAT7TJ4FYSKYGNLJPZ"
+     secret_key = "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"
+}
+
+terraform {
+  backend "s3" {
+    bucket  = "niyanshi"
+    key     = "guru/gehna"
+    region  = "us-east-1"
+    access_key = "AKIAT7TJ4FYSKYGNLJPZ"
+    secret_key = "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"
+    dynamodb_table = "terraform"
+  }
+}
+
+
+resource "aws_instance" "guru" {
+     instance_type = "t2.micro"
+     ami           = "ami-0cff7528ff583bf9a"
+
+     tags = {
+      name = "sanvi"
+  }
+}
+
+resource "aws_instance" "usha" {
+     instance_type = "t2.micro"
+     ami           = "ami-0cff7528ff583bf9a"
+
+     tags = {
+      name = "tanshi"
+  }
+}
+
+  
+  
 
 
       
