@@ -258,3 +258,38 @@ resource "aws_instance" "gehna" {
   }
 }
 
+
+
+==========================  Some Example of conditional =============================
+
+provider "aws" {
+   region     = "us-east-1"
+   access_key = "AKIAT7TJ4FYSGVAFW2R6"
+   secret_key = "BCkT8gx9FbaOvvSsYWPMNxG7tllFaupF98KQCTg6"
+ }
+ 
+ variable "instancetype" {
+     type  =map
+     default = {
+      "dev" = "t2.nano"
+      "test" = "t2.small"
+      "prod" = "t2.micro"
+   }
+}
+
+variable "image" {
+   type = list
+   default = ["ami-0cff7528ff583bf9a","ami-0cff7528ff583bf9a","ami-0cff7528ff583bf9a"]
+}
+
+variable "input" {
+}
+
+resource "aws_instance" "gehna" {
+ instance_type = var.instancetype["dev"]
+ ami           = var.image[0]
+ count = var.input == "dev" ? 10 : 0    ###########################( If var input is dev create a 10 instances if not create 0. this a one conditional operator. this is aldo ternary operator)...
+ tags = {
+   name = var.instancetag[2]
+  }
+}
